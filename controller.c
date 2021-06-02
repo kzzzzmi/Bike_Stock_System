@@ -2,19 +2,141 @@
 
 void modifyBike(Bike *b) {
 	FILE *f;
+	char input[30];
+	char choice[30];
+	int select;
+
+	printf("\n\t\t\t[자전거 정보 수정 시스템]\n\n");
+	printf("뒤로가기를 원하시면 :b 를 입력하십시오.\n\n");
+	printBikeStock(b);
+
+	while (true) {
+		printf(" 수정할 index를 입력해주세요 : ");
+		gets_s(choice, sizeof(choice));
+		if (pageBack(choice)) {
+			system("cls");
+			return;
+		}
+		select = atoi(choice);
+		if (select >= 0 && select < bikeIndexMax) {
+			while (true) {
+				printf("\n1. 모델명을 바꾸시겠습니까?(y / n) : ");
+				gets_s(choice, sizeof(choice));
+				if (*choice == 'y' || *choice == 'Y') {
+					while (true) {
+						printf(" 새로운 모델명을 입력해주세요 : ");
+						gets_s(input, sizeof(input));
+
+						if (pageBack(input)) {
+							system("cls");
+							return;
+						}
+						if (*input == '\0' || *input == ' ') {
+							printf("<공백은 입력할 수 없습니다!>\n\n");
+						}
+						else {
+							break;
+						}
+					}
+					strcpy_s(b[select].model, sizeof(b[select].model), input);
+					break;
+				}
+				else if (*choice == 'n' || *choice == 'N') {
+					break;
+				}
+			}
+
+			while (true) {
+				printf("\n2. 제조사명을 바꾸시겠습니까?(y / n) : ");
+				gets_s(choice, sizeof(choice));
+				if (*choice == 'y' || *choice == 'Y') {
+					while (true) {
+						printf(" 새로운 제조사명을 입력해주세요 : ");
+						gets_s(input, sizeof(input));
+
+						if (pageBack(input)) {
+							system("cls");
+							return;
+						}
+						if (*input == '\0' || *input == ' ') {
+							printf("<공백은 입력할 수 없습니다!>\n\n");
+						}
+						else {
+							break;
+						}
+					}
+					strcpy_s(b[select].manufacturer, sizeof(b[select].manufacturer), input);
+					break;
+				}
+				else if (*choice == 'n' || *choice == 'N') {
+					break;
+				}
+			}
+
+			while (true) {
+				printf("\n3. 제조날짜를 바꾸시겠습니까?(y / n) : ");
+				gets_s(choice, sizeof(choice));
+				if (*choice == 'y' || *choice == 'Y') {
+					while (true) {
+						printf(" 새로운 제조날짜를 입력해주세요 : ");
+						gets_s(input, sizeof(input));
+
+						if (pageBack(input)) {
+							system("cls");
+							return;
+						}
+						if (*input == '\0' || *input == ' ') {
+							printf("<공백은 입력할 수 없습니다!>\n\n");
+						}
+						else {
+							break;
+						}
+					}
+					strcpy_s(b[select].insertDate, sizeof(b[select].insertDate), input);
+					break;
+				}
+				else if (*choice == 'n' || *choice == 'N') {
+					break;
+				}
+			}
+			if (fopen_s(&f, FNAME, "w") != 0) {
+				system("cls");
+				printf("파일을 열지 못했습니다.\n");
+				exit(1);
+			}
+			for (int i = 0; i < bikeIndexMax; i++) {
+				fprintf(f, "%d %s %s %s", i, b[i].model, b[i].manufacturer, b[i].insertDate);
+				if (i < bikeIndexMax - 1) {
+					fprintf(f, "\n");
+				}
+			}
+			fclose(f);
+			system("cls");
+			break;
+		}
+		else {
+			printf(" 0 ~ %d 중 입력해주세요.\n\n", bikeIndexMax - 1);
+		}
+	}
 }
 
 void deleteBike(Bike *b) {
 	FILE *f;
+	char choice[30];
 	int select;
 
-	printf("\t\t\t[자전거 삭제 시스템]\n\n");
+	printf("\n\t\t\t[자전거 정보 삭제 시스템]\n\n");
 	printf("뒤로가기를 원하시면 :b 를 입력하십시오.\n\n");
 	printBikeStock(b);
 
 	while (true) {
 		printf(" 삭제할 index를 입력해주세요 : ");
-		scanf_s("%d", &select);
+		gets_s(choice, sizeof(choice));
+		if (pageBack(choice)) {
+			system("cls");
+			return;
+		}
+		select = atoi(choice);
 		if (select >= 0 && select < bikeIndexMax) {
 			while (select < bikeIndexMax) {
 				strcpy_s(b[select].model, sizeof(b[select].model), b[select + 1].model);
@@ -29,6 +151,9 @@ void deleteBike(Bike *b) {
 			}
 			for (int i = 0; i < bikeIndexMax - 1; i++) {
 				fprintf(f, "%d %s %s %s", i, b[i].model, b[i].manufacturer, b[i].insertDate);
+				if (i < bikeIndexMax - 2) {
+					fprintf(f, "\n");
+				}
 			}
 			fclose(f);
 			system("cls");
@@ -37,6 +162,7 @@ void deleteBike(Bike *b) {
 		else {
 			printf(" 0 ~ %d 중 입력해주세요.\n\n", bikeIndexMax - 1);
 		}
+		
 	}
 }
 

@@ -4,7 +4,7 @@ int bikeIndexMax = 0;
 int currentIndex = 0;
 
 void main() {
-	system("mode con cols=100 lines=40");
+	system("mode con cols=75 lines=40");
 	system("color b");
 
 	bool mLoop = true;
@@ -12,6 +12,8 @@ void main() {
 	char select[10];
 	char loginId[30];
 	char loginPwd[30];
+	char *id = loginId;
+	char *pwd = loginPwd;
 	FILE* f;
 
 	if (fopen_s(&f, LNAME, "a")) {
@@ -38,13 +40,7 @@ void main() {
 		sscanf_s(strBuffer, "%s %s", l.id, sizeof(l.id), l.pwd, sizeof(l.pwd));
 		fclose(f);
 
-		printf("------------------------------------------------------------------\n");
-		printf("\t\t\t[로그인 페이지]\t\t\n");
-		printf("\t\t\t\t\t프로그램 종료(ctrl+c)\n\n");
-		printf("\tid  : ");
-		gets_s(loginId, sizeof(loginId));
-		printf("\tpwd : ");
-		gets_s(loginPwd, sizeof(loginPwd));
+		loginDisplay(id, pwd);
 		
 		if (!strcmp(l.id, loginId) && !strcmp(l.pwd, loginPwd)) {
 			system("cls");

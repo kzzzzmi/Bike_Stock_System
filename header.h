@@ -24,6 +24,7 @@ typedef struct {
 } Login;
 
 // display
+void loginDisplay(char *id, char *pwd);
 void displayMenu();
 void printBikeStock(Bike* b);
 

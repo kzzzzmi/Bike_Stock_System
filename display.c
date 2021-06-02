@@ -1,5 +1,15 @@
 #include "header.h"
 
+void loginDisplay(char *id, char *pwd) {
+	printf("------------------------------------------------------------------\n");
+	printf("\t\t\t[로그인 페이지]\t\t\n");
+	printf("\t\t\t\t\t프로그램 종료(ctrl+c)\n\n");
+	printf("\tid  : ");
+	gets_s(id, sizeof(id));
+	printf("\tpwd : ");
+	gets_s(pwd, sizeof(pwd));
+}
+
 void displayMenu() {
 	printf("\n\t\t\t[자전거 재고 현황 시스템]\t\t\t\t\n\n");
 	printf("\t1. 자전거 재고 추가\n");
