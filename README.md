@@ -1,1 +1,1 @@
-# Bike_Stock_System
+C lang bike stock in-output system
