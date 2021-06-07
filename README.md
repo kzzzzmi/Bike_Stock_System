@@ -1,1 +1,1 @@
-C lang bike stock in-output system
+C lang bike stock management in-output system
