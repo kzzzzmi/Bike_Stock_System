@@ -1,7 +1,6 @@
 #include "header.h"
 
 int bikeIndexMax = 0;
-int currentIndex = 0;
 
 void main() {
 	system("mode con cols=75 lines=40");
@@ -50,7 +49,6 @@ void main() {
 				char strBuffer[256];
 				Bike b[50] = { NULL };
 				bikeIndexMax = 0;
-				currentIndex = 0;
 
 				if (fopen_s(&f, FNAME, "r") != 0) {
 					system("cls");
@@ -63,16 +61,14 @@ void main() {
 					sscanf_s(strBuffer, "%d %s %s %s",
 						&b[bikeIndexMax].index,
 						b[bikeIndexMax].model, sizeof(b[bikeIndexMax].model),
-						b[bikeIndexMax].manufacturer, sizeof(b[bikeIndexMax].manufacturer),
+						b[bikeIndexMax].manufacture, sizeof(b[bikeIndexMax].manufacture),
 						b[bikeIndexMax].insertDate, sizeof(b[bikeIndexMax].insertDate)
 					);
 					bikeIndexMax++;
 				}
 				fclose(f);
 
-				displayMenu();
-				printf("    %s님 환영합니다 !\n\n", l.id);
-				printf("    명령을 입력하세요 : ");
+				displayMenu(loginId);
 				gets_s(select, sizeof(select));
 
 				if (!strcmp(select, "1")) {
